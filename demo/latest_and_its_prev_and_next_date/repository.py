@@ -32,6 +32,9 @@ class DemoRepository(Repository):
         cur.close()
         self.conn.commit()
 
+    def __del__(self) -> None:
+        self.conn.close()
+
     def add_dates(self, dates: List[date]) -> None:
         cur = self.conn.cursor()
         cur.execute(
