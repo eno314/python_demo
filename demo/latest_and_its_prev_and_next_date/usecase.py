@@ -1,4 +1,4 @@
-import datetime
+from datetime import date
 from typing import Tuple
 from demo.latest_and_its_prev_and_next_date.repository import Repository
 
@@ -8,8 +8,8 @@ class Usecase:
         self.repository = repository
 
     def find_latest_and_its_prev_and_next_date_v1(
-        self, target: datetime.date
-    ) -> Tuple[datetime.date, datetime.date, datetime.date]:
+        self, target: date
+    ) -> Tuple[date, date, date]:
         latest_date = self.repository.find_latest_date(target)
         if latest_date is None:
             return None, None, None
