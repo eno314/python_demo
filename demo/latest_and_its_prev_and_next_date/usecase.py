@@ -20,7 +20,7 @@ class Usecase:
     def find_latest_and_its_prev_and_next_date_v2(
         self, target: date
     ) -> Tuple[date, date, date]:
-        all_dates = self.repository.find_all_date_list()
+        all_dates = self.repository.find_sorted_all_dates()
         latest_index = self._find_latest_index_from_dates(all_dates, target)
         return (
             self._get_date_or_none_from_dates(all_dates, latest_index),
@@ -29,12 +29,12 @@ class Usecase:
         )
 
     def _find_latest_index_from_dates(
-        self, dates: List[date], target: date
+        self, sorted_dates: List[date], target: date
     ) -> int:
         latest_index = 0
-        for index in range(1, len(dates)):
-            date_diff_days = abs((dates[index] - target).days)
-            latest_diff_days = abs((dates[latest_index] - target).days)
+        for index in range(1, len(sorted_dates)):
+            date_diff_days = abs((sorted_dates[index] - target).days)
+            latest_diff_days = abs((sorted_dates[latest_index] - target).days)
             if date_diff_days < latest_diff_days:
                 latest_index = index
             else:

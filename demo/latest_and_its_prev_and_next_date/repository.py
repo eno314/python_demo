@@ -19,7 +19,7 @@ class Repository(ABC):
         pass
 
     @abstractmethod
-    def find_all_date_list(self) -> List[date]:
+    def find_sorted_all_dates(self) -> List[date]:
         pass
 
 
@@ -67,7 +67,7 @@ class DemoRepository(Repository):
         result = self._exec_fetchone_query(sql, [self._date_to_saved(target)])
         return self._fetchone_result_to_date(result)
 
-    def find_all_date_list(self) -> List[date]:
+    def find_sorted_all_dates(self) -> List[date]:
         sql = '''
             SELECT DISTINCT date FROM demo
             ORDER BY date;
