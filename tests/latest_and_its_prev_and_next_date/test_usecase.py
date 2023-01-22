@@ -64,7 +64,7 @@ class Test_find_latest_and_its_prev_and_next_date_v1:
         (date(2023, 1, 30)),
         (date(2023, 2, 1)),
     ])
-    def test_find_latest_and_its_prev_and_next_date_v1_having_no_data_then_return_none(
+    def test_find_latest_and_its_prev_and_next_date_v1_having_no_data(
         self, target_date
     ):
         sut = setup_usecase_having_demo_repository_with_no_date()
@@ -101,9 +101,23 @@ class Test_find_latest_and_its_prev_and_next_date_v2:
             (date(2023, 1, 30), date(2023, 1, 20), None),
         ),
     ])
-    def test_find_latest_and_its_prev_and_next_date_v1_having_data(
+    def test_find_latest_and_its_prev_and_next_date_v2_having_data(
         self, target, expected
     ):
         sut = setup_usecase_having_demo_repository_with_simple_date()
         actual = sut.find_latest_and_its_prev_and_next_date_v2(target)
         assert actual == expected
+
+    @pytest.mark.parametrize(('target_date'), [
+        (date(2022, 12, 31)),
+        (date(2023, 1, 1)),
+        (date(2023, 1, 18)),
+        (date(2023, 1, 30)),
+        (date(2023, 2, 1)),
+    ])
+    def test_find_latest_and_its_prev_and_next_date_v2_having_no_data(
+        self, target_date
+    ):
+        sut = setup_usecase_having_demo_repository_with_no_date()
+        actual = sut.find_latest_and_its_prev_and_next_date_v2(target_date)
+        assert actual == (None, None, None)
