@@ -7,7 +7,7 @@ from typing import List
 class Repository(ABC):
 
     @abstractmethod
-    def find_latest_date(self, target: date) -> date:
+    def find_nearest_date(self, target: date) -> date:
         pass
 
     @abstractmethod
@@ -44,7 +44,7 @@ class DemoRepository(Repository):
         cur.close()
         self.conn.commit()
 
-    def find_latest_date(self, target: date) -> date:
+    def find_nearest_date(self, target: date) -> date:
         sql = '''
             SELECT date FROM demo
             ORDER BY ABS(JULIANDAY(date) - JULIANDAY(?)) LIMIT 1;

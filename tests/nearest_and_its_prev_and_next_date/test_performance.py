@@ -1,6 +1,6 @@
 from datetime import date, timedelta
-from demo.latest_and_its_prev_and_next_date.repository import DemoRepository
-from demo.latest_and_its_prev_and_next_date.usecase import Usecase
+from demo.nearest_and_its_prev_and_next_date.repository import DemoRepository
+from demo.nearest_and_its_prev_and_next_date.usecase import Usecase
 
 
 def setup_usecase_having_demo_repository_with_many_data(size):
@@ -14,7 +14,7 @@ def setup_usecase_having_demo_repository_with_many_data(size):
 def test_performance_v1(benchmark):
     sut = setup_usecase_having_demo_repository_with_many_data(1)
     result = benchmark(
-        sut.find_latest_and_its_prev_and_next_date_v1,
+        sut.find_nearest_and_its_prev_and_next_date_v1,
         date(2023, 12, 31)
     )
     assert result
@@ -23,7 +23,7 @@ def test_performance_v1(benchmark):
 def test_performance_v2(benchmark):
     sut = setup_usecase_having_demo_repository_with_many_data(1)
     result = benchmark(
-        sut.find_latest_and_its_prev_and_next_date_v2,
+        sut.find_nearest_and_its_prev_and_next_date_v2,
         date(2023, 12, 31)
     )
     assert result
@@ -32,7 +32,7 @@ def test_performance_v2(benchmark):
 def test_performance_10times_v1(benchmark):
     sut = setup_usecase_having_demo_repository_with_many_data(10)
     result = benchmark(
-        sut.find_latest_and_its_prev_and_next_date_v1,
+        sut.find_nearest_and_its_prev_and_next_date_v1,
         date(2023, 12, 31)
     )
     assert result
@@ -41,7 +41,7 @@ def test_performance_10times_v1(benchmark):
 def test_performance_10times_v2(benchmark):
     sut = setup_usecase_having_demo_repository_with_many_data(10)
     result = benchmark(
-        sut.find_latest_and_its_prev_and_next_date_v2,
+        sut.find_nearest_and_its_prev_and_next_date_v2,
         date(2023, 12, 31)
     )
     assert result
@@ -50,7 +50,7 @@ def test_performance_10times_v2(benchmark):
 def test_performance_100times_v1(benchmark):
     sut = setup_usecase_having_demo_repository_with_many_data(100)
     result = benchmark(
-        sut.find_latest_and_its_prev_and_next_date_v1,
+        sut.find_nearest_and_its_prev_and_next_date_v1,
         date(2023, 12, 31)
     )
     assert result
@@ -59,7 +59,7 @@ def test_performance_100times_v1(benchmark):
 def test_performance_100times_v2(benchmark):
     sut = setup_usecase_having_demo_repository_with_many_data(100)
     result = benchmark(
-        sut.find_latest_and_its_prev_and_next_date_v2,
+        sut.find_nearest_and_its_prev_and_next_date_v2,
         date(2023, 12, 31)
     )
     assert result
@@ -68,7 +68,7 @@ def test_performance_100times_v2(benchmark):
 def test_performance_1000times_v1(benchmark):
     sut = setup_usecase_having_demo_repository_with_many_data(1000)
     result = benchmark(
-        sut.find_latest_and_its_prev_and_next_date_v1,
+        sut.find_nearest_and_its_prev_and_next_date_v1,
         date(2023, 12, 31)
     )
     assert result
@@ -77,7 +77,7 @@ def test_performance_1000times_v1(benchmark):
 def test_performance_1000times_v2(benchmark):
     sut = setup_usecase_having_demo_repository_with_many_data(1000)
     result = benchmark(
-        sut.find_latest_and_its_prev_and_next_date_v2,
+        sut.find_nearest_and_its_prev_and_next_date_v2,
         date(2023, 12, 31)
     )
     assert result
