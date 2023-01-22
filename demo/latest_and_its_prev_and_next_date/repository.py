@@ -18,6 +18,10 @@ class Repository(ABC):
     def find_next_date(self, target: date) -> date:
         pass
 
+    @abstractmethod
+    def find_all_date_list(self) -> List[date]:
+        pass
+
 
 class DemoRepository(Repository):
 
@@ -59,6 +63,17 @@ class DemoRepository(Repository):
         result = self._exec_fetchone_query(sql, [self._date_to_saved(target)])
         return self._fetchone_result_to_date(result)
 
+    def find_all_date_list(self) -> List[date]:
+        sql = '''
+            SELECT DISTINCT date FROM demo
+            ORDER BY date;
+        '''
+        cur = self.conn.cursor()
+        cur.execute(sql)
+        results = cur.fetchall()
+        cur.close()
+        return [self._saved_to_date(result[0]) for result in results]
+
     def _get_create_table_sql(self) -> str:
         return '''
             CREATE TABLE IF NOT EXISTS demo (
@@ -78,11 +93,14 @@ class DemoRepository(Repository):
         cur.close()
         return result
 
-    def _date_to_saved(self, date: date) -> str:
-        return date.strftime('%Y-%m-%d')
-
     def _fetchone_result_to_date(self, result):
         if result is None:
             return None
         else:
-            return date.fromisoformat(result[0])
+            return self._saved_to_date(result[0])
+
+    def _date_to_saved(self, date: date) -> str:
+        return date.strftime('%Y-%m-%d')
+
+    def _saved_to_date(self, saved: str) -> date:
+        return date.fromisoformat(saved)
