@@ -1,5 +1,5 @@
 
-from datetime import date
+from datetime import date, timedelta
 import pytest
 
 from demo.latest_and_its_prev_and_next_date.repository import DemoRepository
@@ -7,18 +7,18 @@ from demo.latest_and_its_prev_and_next_date.usecase import Usecase
 
 
 def setup_usecase_having_demo_repository_with_simple_date():
-    date_list = [
+    repository = DemoRepository()
+    repository.add_dates([
         date(2023, 1, 1),
         date(2023, 1, 10),
         date(2023, 1, 20),
         date(2023, 1, 30)
-    ]
-
-    return Usecase(DemoRepository(date_list))
+    ])
+    return Usecase(repository)
 
 
 def setup_usecase_having_demo_repository_with_no_date():
-    return Usecase(DemoRepository([]))
+    return Usecase(DemoRepository())
 
 
 class Test_find_latest_and_its_prev_and_next_date_v1:
@@ -121,3 +121,29 @@ class Test_find_latest_and_its_prev_and_next_date_v2:
         sut = setup_usecase_having_demo_repository_with_no_date()
         actual = sut.find_latest_and_its_prev_and_next_date_v2(target_date)
         assert actual == (None, None, None)
+
+
+class Test_performance:
+
+    def test_performance_v1(self, benchmark):
+        sut = self._setup_usecase_having_demo_repository_with_many_data()
+        result = benchmark(
+            sut.find_latest_and_its_prev_and_next_date_v1,
+            date(2023, 12, 31)
+        )
+        assert result
+
+    def test_performance_v2(self, benchmark):
+        sut = self._setup_usecase_having_demo_repository_with_many_data()
+        result = benchmark(
+            sut.find_latest_and_its_prev_and_next_date_v2,
+            date(2023, 12, 31)
+        )
+        assert result
+
+    def _setup_usecase_having_demo_repository_with_many_data(self):
+        repository = DemoRepository()
+        date_list = [date(2023, 1, 1) + timedelta(days=i) for i in range(365)]
+        for _ in range(1000):
+            repository.add_dates(date_list)
+        return Usecase(repository)

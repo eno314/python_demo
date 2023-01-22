@@ -25,15 +25,19 @@ class Repository(ABC):
 
 class DemoRepository(Repository):
 
-    def __init__(self, date_list: List[date]) -> None:
+    def __init__(self) -> None:
         self.conn = sqlite3.connect(":memory:")
         cur = self.conn.cursor()
         cur.execute(self._get_create_table_sql())
-        if len(date_list) > 0:
-            cur.execute(
-                self._get_insert_table_sql(date_list),
-                [self._date_to_saved(date) for date in date_list]
-            )
+        cur.close()
+        self.conn.commit()
+
+    def add_dates(self, dates: List[date]) -> None:
+        cur = self.conn.cursor()
+        cur.execute(
+            self._get_insert_table_sql(dates),
+            [self._date_to_saved(date) for date in dates]
+        )
         cur.close()
         self.conn.commit()
 
