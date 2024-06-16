@@ -1,3 +1,4 @@
+from demo.gossiping_bus_drivers.simulation import simulate_drive_till_equal
 from demo.gossiping_bus_drivers.driver import Driver
 from demo.gossiping_bus_drivers.route import Route
 from demo.gossiping_bus_drivers.rumor import Rumor
@@ -78,4 +79,32 @@ class TestGossip:
         assert self._driver1.get_rumors() == set([self._rumor1, self._rumor2, self._rumor3])
         assert self._driver2.get_rumors() == set([self._rumor1, self._rumor2, self._rumor3])
 
-    def test_drive_till_equal_test():
+    def test_drive_till_equal_test(self):
+        assert 1 == simulate_drive_till_equal([self._driver1, self._driver2])
+
+
+def test_acceptance1():
+    s1 = Stop("s1")
+    s2 = Stop("s2")
+    s3 = Stop("s3")
+    s4 = Stop("s4")
+    s5 = Stop("s5")
+    r1 = Route([s3, s1, s2, s3])
+    r2 = Route([s3, s2, s3, s1])
+    r3 = Route([s4, s2, s3, s4, s5])
+    d1 = Driver("d1", r1, [Rumor("1")])
+    d2 = Driver("d2", r2, [Rumor("2")])
+    d3 = Driver("d3", r3, [Rumor("3")])
+    assert 6 == simulate_drive_till_equal([d1, d2, d3])
+
+
+def test_acceptance2():
+    s1 = Stop("s1")
+    s2 = Stop("s2")
+    s5 = Stop("s5")
+    s8 = Stop("s8")
+    r1 = Route([s2, s1, s2])
+    r2 = Route([s5, s2, s8])
+    d1 = Driver("d1", r1, [Rumor("1")])
+    d2 = Driver("d2", r2, [Rumor("2")])
+    assert 480 == simulate_drive_till_equal([d1, d2])
