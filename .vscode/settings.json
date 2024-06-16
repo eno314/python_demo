@@ -1,7 +1,17 @@
 {
+    "eslint.format.enable": false,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "never"
+    },
     "cSpell.words": [
         "Usecase"
     ],
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports.ruff": "explicit"
+        }
+    },
     "python.testing.pytestArgs": [
         "tests"
     ],
