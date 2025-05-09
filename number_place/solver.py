@@ -1,5 +1,5 @@
 from typing import List, Optional
-from number_place.board import Board
+from number_place.board import BOARD_SIZE, Board
 
 
 def solve(board: List[List[Optional[int]]]) -> List[List[int]]:
@@ -40,7 +40,7 @@ def _solve(board: Board) -> List[List[int]]:
         return board.values
 
     row, col = empty_pos
-    for num in range(1, 9 + 1):
+    for num in range(1, BOARD_SIZE + 1):
         if board.is_valid(row, col, num):
             new_board = board.replace_at(row, col, num)
             try:
