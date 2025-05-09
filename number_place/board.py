@@ -11,7 +11,7 @@ class Board:
 
     def replace_at(self, row: int, col: int, v: Optional[int]) -> Self:
         new_values = [r[:] for r in self.values]
-        new_values[col][row] = v
+        new_values[row][col] = v
         return Board(new_values)
 
     def is_valid(self, row: int, col: int, num: int) -> bool:

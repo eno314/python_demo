@@ -17,7 +17,16 @@ base_board = [
 
 @pytest.mark.parametrize(
     "board",
-    [base_board, Board(base_board).replace_at(0, 0, None).values],
+    [
+        base_board,
+        Board(base_board).replace_at(0, 0, None).values,
+        Board(base_board)
+        .replace_at(0, 0, None)
+        .replace_at(0, 1, None)
+        .replace_at(1, 0, None)
+        .replace_at(1, 1, None)
+        .values,
+    ],
 )
 def test_solve_happy_path(board):
     assert solver.solve(board) == base_board
